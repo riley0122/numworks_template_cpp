@@ -1,3 +1,4 @@
+[![Build](https://github.com/riley0122/numworks_template_cpp/actions/workflows/main.yml/badge.svg)](https://github.com/riley0122/numworks_template_cpp/actions/workflows/main.yml)
 # C++ Numworks Development template
 
 This is a template to start developing for the [Numworks](https://www.numworks.com/) graphing calculator.
