@@ -10,13 +10,10 @@ define object_for
 $(addprefix $(BUILD_DIR)/,$(addsuffix .o,$(basename $(1))))
 endef
 
-src = $(addprefix src/, \
+src = $(addprefix src/,\
   main.cpp \
   eadk_vars.cpp \
 )
-
-# Ensure the Node.js bin directory is in the PATH
-export PATH := $(shell npm bin):$(PATH)
 
 CPPFLAGS = -std=c++11 -fno-exceptions
 CPPFLAGS += -Os -Wall
@@ -40,16 +37,20 @@ LDFLAGS += -flinker-output=nolto-rel
 endif
 
 .PHONY: build
-build: $(BUILD_DIR)/NAME.nwa
+build: $(BUILD_DIR)/NAME.bin
 
 .PHONY: run
 run: $(BUILD_DIR)/NAME.nwa
 	@echo "INSTALL $<"
 	$(Q) $(NWLINK) install-nwa $<
 
+$(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.nwa
+	@echo "BIN     $@"
+	$(Q) $(NWLINK) nwa-bin $< $@
+
 $(BUILD_DIR)/NAME.nwa: $(call object_for,$(src)) $(BUILD_DIR)/icon.o
 	@echo "LD      $@"
-	$(Q) $(CXX) $(CPPFLAGS) $(LDFLAGS) $^ -o $@
+	$(Q) $(CC) $(CPPFLAGS) $(LDFLAGS) $^ -o $@
 
 $(addprefix $(BUILD_DIR)/,%.o): %.cpp | $(BUILD_DIR)
 	@echo "CXX     $^"
