@@ -30,12 +30,12 @@ jobs:
             target/NAME.nwa
 
       - name: Upload release
-  uses: actions/create-release@latest-version  # Use the latest version available
-  with:
-    tag_name: ${{ github.event.release.tag_name }}
-    release_name: ${{ github.event.release.name }}
-    body: |
-      Uploaded application: target/NAME.bin
-      Uploaded .nwa file: target/NAME.nwa
-  if: steps.upload.outputs.artifact_url != ''
+        uses: actions/create-release@latest-version  # Use the latest version available
+        with:
+          tag_name: ${{ github.event.release.tag_name }}
+          release_name: ${{ github.event.release.name }}
+          body: |
+            Uploaded application: target/NAME.bin
+            Uploaded .nwa file: target/NAME.nwa
+        if: steps.upload.outputs.artifact_url != ''
 
