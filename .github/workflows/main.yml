@@ -21,10 +21,15 @@ jobs:
           wget "https://developer.arm.com/-/media/Files/downloads/gnu-rm/10.3-2021.10/gcc-arm-none-eabi-10.3-2021.10-x86_64-linux.tar.bz2"
           tar -jxf gcc-arm-none-eabi-10.3-2021.10-x86_64-linux.tar.bz2
           rm gcc-arm-none-eabi-10.3-2021.10-x86_64-linux.tar.bz2
-          export PATH="/opt/gcc-arm-none-eabi-10.3-2021.10/bin:$PATH"
+          echo "::add-path::/opt/gcc-arm-none-eabi-10.3-2021.10/bin"
 
       - name: Build application
-        run: make build
+        run: |
+          make build
+          if [ $? -ne 0 ]; then
+            echo "Build failed"
+            exit 1
+          fi
 
       - name: Upload .bin and .nwa
         uses: actions/upload-artifact@v3
