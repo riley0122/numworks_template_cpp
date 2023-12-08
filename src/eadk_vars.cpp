@@ -1,4 +1,3 @@
-// eadk_vars.cpp
 #include "eadk_vars.h"
 #include "eadkpp.h"
 
