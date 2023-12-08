@@ -30,7 +30,7 @@ jobs:
             target/NAME.nwa
 
       - name: Upload release
-        uses: actions/create-release@latest-version  # Use the latest version available
+        uses: actions/create-release@latest
         with:
           tag_name: ${{ github.event.release.tag_name }}
           release_name: ${{ github.event.release.name }}
