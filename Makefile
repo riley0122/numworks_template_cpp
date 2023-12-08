@@ -17,7 +17,7 @@ src = $(addprefix src/,\
 
 CPPFLAGS = -std=c++11 -fno-exceptions
 CPPFLAGS += -Os -Wall
-CPPFLAGS += $(shell $(NWLINK) eadk-cflags)
+CPPFLAGS += $(shell $$(NWLINK) eadk-cflags)
 CPPFLAGS += -D__RODATA_EADK_API_LEVEL__=\"1.0\" -D__RODATA_EADK_APP_NAME__=\"NAME\"
 LDFLAGS = -Wl,--relocatable
 LDFLAGS += -nostartfiles
@@ -42,11 +42,11 @@ build: $(BUILD_DIR)/NAME.bin
 .PHONY: run
 run: $(BUILD_DIR)/NAME.nwa
 	@echo "INSTALL $<"
-	$(Q) $(NWLINK) install-nwa $<
+	$(Q) $$(NWLINK) install-nwa $<
 
 $(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.nwa
 	@echo "BIN     $@"
-	$(Q) $(NWLINK) nwa-bin $< $@
+	$(Q) $$(NWLINK) nwa-bin $< $@
 
 $(BUILD_DIR)/NAME.nwa: $(call object_for,$(src)) $(BUILD_DIR)/icon.o
 	@echo "LD      $@"
@@ -58,7 +58,7 @@ $(addprefix $(BUILD_DIR)/,%.o): %.cpp | $(BUILD_DIR)
 
 $(BUILD_DIR)/icon.o: src/icon.png
 	@echo "ICON    $<"
-	$(Q) $(NWLINK) png-icon-o $< $@
+	$(Q) $$(NWLINK) png-icon-o $< $@
 
 .PRECIOUS: $(BUILD_DIR)
 $(BUILD_DIR):
